@@ -1,7 +1,7 @@
 # Ghi chú phân tích · Day 04
 
-Họ và tên:
-MSSV:
+Họ và tên: Đào Hồng Thắng
+MSSV: 2A202604076
 
 ## 1. Case được chọn
 
