@@ -57,15 +57,21 @@ Case liên quan để đối chiếu: A3 cùng scenario timeout nhưng không c�
 
 ## 4. So sánh hai lần chạy
 
+Cùng cấu hình: `claude-haiku-4-5` (agent và judge), `max_steps` = 8, 22 case.
+
 | Chỉ số | `eval_before.json` | `eval_after.json` |
 |---|---|---|
-| Điểm tổng |  |  |
-| Điểm case đã chọn |  |  |
-| Số model calls |  |  |
-| Token, chi phí nếu có |  |  |
+| Điểm tổng | 91.18 | 93.36 |
+| Điểm case đã chọn (H7) | 40 | 97 |
+| Số model calls | 51 | 49 |
+| Token agent (in / out), chi phí ước tính | 74.0k / 17.2k, ≈ $0.16 | 77.0k / 16.8k, ≈ $0.16 |
 
-- Lỗi đã giải quyết:
-- Lỗi còn lại hoặc mới xuất hiện:
+*Chi phí ước tính theo giá Haiku 4.5 ($1/M input, $5/M output), chưa tính judge.*
+
+- **Lỗi đã giải quyết:** H7 không còn bịa trạng thái Cloudflare. Agent ghi rõ `TimeoutError`, từ chối kết luận "operational" và dẫn nguồn githubstatus.com. Điểm sửa được là nhờ thay đổi prompt; phần kiểm tra nguồn trong loop không kích hoạt ở case nào. Không có từ chối quá mức (H4 vẫn 100, A3 vẫn xử lý timeout đúng).
+- **Lỗi còn lại hoặc mới xuất hiện:**
+  - **H6 giảm từ 94 xuống 60:** agent không gọi tiếp incident liên kết `xr3myzj7ms51`, chỉ nói "cần gọi riêng để kiểm tra", nên bị giới hạn điểm vì chỉ gọi tool trong một step. Có thể do quy tắc "nêu giới hạn dữ liệu" mới, hoặc do dao động ngẫu nhiên.
+  - **H2 vẫn 50:** agent không gọi `get_status`. Lỗi này có từ lần chạy 1 và không nằm trong phạm vi thay đổi lần này.
 
 ## 5. Giới hạn
 
